@@ -227,11 +227,20 @@ window.addEventListener('DOMContentLoaded', function() {
             form.insertAdjacentElement('afterend', statusMessage);
 
             const formData = new FormData(form);
+            const object = {};
+            formData.forEach(function(value, key){
+                object[key] = value;
+            });
 
             fetch('server.php', {
                 method: 'POST',
-                body: formData
-            }).then(data => {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(object)
+            })
+            .then(data => data.text())
+            .then(data => {
                 console.log(data);
                 showThanksModal(message.success);
                 statusMessage.remove();
