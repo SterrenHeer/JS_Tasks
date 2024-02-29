@@ -1,4 +1,7 @@
 window.addEventListener('DOMContentLoaded', function() {  
+
+    // Tabs
+
 	let tabs = document.querySelectorAll('.tabheader__item'),
 		tabsContent = document.querySelectorAll('.tabcontent'),
 		tabsParent = document.querySelector('.tabheader__items');
@@ -34,6 +37,8 @@ window.addEventListener('DOMContentLoaded', function() {
             });
 		}
 	});
+
+    // Timer
 
     const deadline = '2024-03-08';
 
@@ -92,6 +97,8 @@ window.addEventListener('DOMContentLoaded', function() {
 
     setClock('.timer', deadline)
 
+    // Modal
+
     const modalTrigger = document.querySelectorAll('[data-modal]'),
         modal = document.querySelector('.modal');
 
@@ -134,6 +141,8 @@ window.addEventListener('DOMContentLoaded', function() {
     }
 
     window.addEventListener('scroll', showModalByScroll);
+
+    // Menu cards
 
     class MenuCard {
         constructor(src, alt, title, descr, price, parentSelector, ...classes) {
@@ -203,6 +212,8 @@ window.addEventListener('DOMContentLoaded', function() {
     //         document.querySelector(".menu .container").append(element);
     //     });
     // }
+
+    // Forms
 
     const forms = document.querySelectorAll('form');
     const message = {
@@ -285,4 +296,50 @@ window.addEventListener('DOMContentLoaded', function() {
             closeModal();
         }, 4000);
     }
+
+    // Slider
+
+    let slideIndex = 1;
+    const slides = document.querySelectorAll('.offer__slide'),
+        prev = document.querySelector('.offer__slider-prev'),
+        next = document.querySelector('.offer__slider-next'),
+        total = document.querySelector('#total'),
+        current = document.querySelector('#current');
+
+    showSlides(slideIndex);
+
+    if (slides.length < 10) {
+        total.textContent = `0${slides.length}`;
+    } else {
+        total.textContent = slides.length;
+    }
+
+    function showSlides(n) {
+        if (n > slides.length) {
+            slideIndex = 1;
+        }
+        if (n < 1) {
+            slideIndex = slides.length;
+        }
+        slides.forEach((item) => item.classList.add('hide'));
+        slides[slideIndex - 1].classList.add('show');
+        slides[slideIndex - 1].classList.remove('hide');
+        if (slides.length < 10) {
+            current.textContent =  `0${slideIndex}`;
+        } else {
+            current.textContent =  slideIndex;
+        }
+    }
+
+    function plusSlides (n) {
+        showSlides(slideIndex += n);
+    }
+
+    prev.addEventListener('click', function(){
+        plusSlides(-1);
+    });
+
+    next.addEventListener('click', function(){
+        plusSlides(1);
+    });
 });
